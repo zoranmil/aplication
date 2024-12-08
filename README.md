@@ -1,4 +1,4 @@
-# aplocation
+# aplication
 sample electron app
 run :
 
