@@ -1,6 +1,6 @@
 "use strict";
 
-const Db = require('./node_modules/db/db.js');
+const Db = require('@zoranmil/jsondb');
 const JSON_DBPATH="baza";
 
 
