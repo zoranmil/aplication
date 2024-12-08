@@ -9,7 +9,7 @@
 	},
 	"license": "ISC",
 	"dependencies": {
-		"@zoranmil/jsondb": "^1.0.0",
+		"@zoranmil/jsondb": "^1.0.3",
 		"electron": "^3.0.4",
 		"electron-packager": "^12.2.0",
 		"fs": "^0.0.1-security",
