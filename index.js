@@ -51,18 +51,14 @@ app.on("ready", () => {
     mainWindow.loadFile(path.join(__dirname,  "index.html"));
    mainWindow.setIcon(path.join(__dirname, '/assets/favicon.ico'));
    const mainMenu = Menu.buildFromTemplate(omenuTemplate);
-     Menu.setApplicationMenu(mainMenu);
+    Menu.setApplicationMenu(mainMenu);
       const tMenu = Menu.buildFromTemplate(omenuTemplate);
     tray = new Tray( __dirname + '/assets/favicon.ico')
     tray.setToolTip('vtr_vasa.')
  tray.setContextMenu(tMenu)
-    // Open the DevTools.
-    //mainWindow.webContents.openDevTools();
-    // Emitted when the window is closed.
+
     mainWindow.on("closed", function () {
-        // Dereference the window object, usually you would store windows
-        // in an array if your app supports multi windows, this is the time
-        // when you should delete the corresponding element.
+
         mainWindow = null;
     });
 });
