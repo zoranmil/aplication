@@ -30,6 +30,23 @@ class Db {
      this.data.push( udata);
       writeFileSync(this.DbName, JSON.stringify(this.data));
    };
+   Between ( key, value1, value2) {
+      if(typeof value1!== 'number'){
+         value1=parseInt(value1);
+        }
+         if(typeof value2!== 'number'){
+            value2=parseInt(value2);
+         }
+      this.newdata= [];
+       let i=0;
+     for ( i = 0; i < this.data.length; i++){
+         if(this.data[i][key] >= value1 && this.data[i][key] <= value2){
+           this.newdata.push(this.data[i]);
+         }
+       }
+        this.data=this.newdata;
+        return this;
+   };
    Like (col,name){
      this.newdata= [];
      let index=0;let entry;
