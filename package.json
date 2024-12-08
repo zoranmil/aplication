@@ -1,0 +1,19 @@
+{
+	"name": "example",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"author": "",
+	"scripts": {
+		"start": "electron ."
+	},
+	"license": "ISC",
+	"dependencies": {
+		"electron": "^3.0.4",
+		"electron-packager": "^12.2.0",
+		"fs": "^0.0.1-security",
+		"path": "^0.12.7",
+		"process": "^0.11.10",
+		"sqlite3": "^4.1.1"
+	}
+}

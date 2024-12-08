@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Unos proizvpda</title>
+ <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval';font-src  * 'unsafe-inline' 'unsafe-eval';  script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline' 'unsafe-eval'; img-src * 'self' data:  ;">
+
+  <link rel="stylesheet" href="assets/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/select.css" />
+  <link rel="stylesheet" href="assets/sweetalert2.css" />
+
+  <script src="renderer.js"></script>
+  <script src="assets/edjs.js"></script>
+  <script src="assets/select.js"></script>
+  <script src="assets/pagination.js"></script>
+  <script src="assets/sweetalert2.all.min.js"></script>
+  <style>
+.nastavi{
+width: 200px;
+background-color: #b7d0d900;
+	cursor: pointer;
+	font-weight: bold;
+	line-height: 1;
+	-webkit-border-radius: 5px;
+	-webkit-box-shadow: 0 1px 3px #999;
+	text-shadow: 0 -1px 1px #222;
+	border-bottom: 1px solid #222;
+	padding: 4px;
+	margin:10px 10px 40px 10px;
+	text-align:center;
+}
+a.page-link{
+  color: #000000;
+}
+.btnacrive{
+  background-color: #9f5a5a;
+}
+.swal2-styled.swal2-confirm {
+  min-width: 140px;
+  background-color: #b7d0d900;
+  	cursor: pointer;
+  	font-weight: bold;
+  	line-height: 1;
+  	-webkit-border-radius: 5px;
+  	-webkit-box-shadow: 0 1px 3px #999;
+  	text-shadow: 0 -1px 1px #222;
+  	border-bottom: 1px solid #222;
+  	padding: 14px;
+  	margin:10px 10px 40px 10px;
+  	text-align:center;
+  }
+.swal2-styled.swal2-deny {
+
+  background-color: #d14529;
+  color: #fff;
+  }
+.swal2-styled.swal2-cancel {
+
+  background-color: #9f5a5a;
+  color: #fff;
+}
+.swal2-html-container{
+  color: #fff;
+}
+
+</style>
+</head>
+
+<body>
+  <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+      <div class="container">
+          <a class="navbar-brand nastavi btnacrive vidisve" href="#">Podatci</a>
+          <a class="navbar-brand " href="#"><h1>vtr_vaso</h1></a>
+         <a class="navbar-brand nastavi vididodaj" href="#">Dodaj proizvod</a>
+      </div>
+    </nav>
+
+
+      <div class="container prikaz">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <div class="row">
+              <div class="col-md-6" style="margin-top:20px;" >
+              <div class="form-group">
+                      <button  type="button" class="btn waves-effect waves-light btn-block  btn-dark osvezisve">Osvežl</button>
+
+                  </div>
+              </div>
+                <div class="col-md-6" >
+                  <div class="form-group">
+
+                <div id="odaberi">
+                  <select id="option" name="ddProducts"  >   </select>
+                </div>
+               </div>
+               </div>
+                </div>
+            </div>
+</div>
+
+<div class="col-md-12 text-center">
+   <div id="sad"></div>
+      <table class="table table-hover">
+  <thead >
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Naziv</th>
+      <th scope="col">Cena</th>
+      <th scope="col">Dimenzija</th>
+      <th scope="col">Količina</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody id="tbody"  >
+
+
+  </tbody>
+</table>
+</div>
+</div>
+<div class="container dodaj" style="display:none">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="mt-5 text-center">Dodaj proizvod</h1>
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
+                  <label>Naziv</label>
+                  <input type="text" tabindex="1" class="form-control"  id="naziv" placeholder="Unesite naziv" value="">
+              </div>
+          </div>
+          <div class="col-md-12">
+          <div class="form-group">
+                  <label>Dimenzija</label>
+                  <input type="text" tabindex="2"  class="form-control"  id="marka" placeholder="Unesite dimenzijuu" value="">
+              </div>
+          </div>
+            <div class="col-md-6">
+          <div class="form-group">
+                  <label>Cena</label>
+                  <input type="text" tabindex="3" class="form-control" id="cena" placeholder="Unesite cenu" value="">
+              </div>
+            </div>
+            <div class="col-md-6">
+          <div class="form-group">
+                  <label>Količina</label>
+                  <input type="text" tabindex="4" class="form-control" id="kolicina" placeholder="Unesite količinu" value="">
+              </div>
+            </div>
+            <div class="col-md-12" style="margin-top:20px">
+            <div class="form-group">
+                    <button  type="button" class="btn waves-effect waves-light btn-block  btn-dark dodalubazu">Unesi proizvod</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container updated" style="display:none">
+      <input type="hidden" id="cid" value="0" >
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="mt-5 text-center">Promeni proizvod</h1>
+            <div class="row">
+              <div class="col-md-12">
+              <div class="form-group">
+                      <label>Naziv</label>
+                      <input tabindex="1" type="text" class="form-control" id="cnaziv" placeholder="Unesite naziv" value="">
+                  </div>
+              </div>
+              <div class="col-md-12">
+              <div class="form-group">
+                      <label>Dimenzija</label>
+                      <input tabindex="2" type="text" class="form-control" id="cmarka" placeholder="Unesite dimenziju" value="">
+                  </div>
+              </div>
+                <div class="col-md-6">
+              <div class="form-group">
+                      <label>Cena</label>
+                      <input tabindex="3" type="text" class="form-control"  id="ccena" placeholder="Unesite cenu" value="">
+                  </div>
+                </div>
+                <div class="col-md-6">
+              <div class="form-group">
+                      <label>Količina</label>
+                      <input tabindex="4" type="text" class="form-control" id="ckolicina" placeholder="Unesite količinu" value="">
+                  </div>
+                </div>
+                <div class="col-md-12" style="margin-top:20px">
+                <div class="form-group">
+                        <button  type="button" class="btn waves-effect waves-light btn-block  btn-dark promenibazu">Promeni proizvod</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+  <script>
+  ///npx electron-packager D:\wamp64\www\electrin vasa_vtr --platform=win32 --arch=ia32  --icon= D:\wamp64\www\electrin\assets\favicon.ico
+ // npx @electron/packager ./ --platform=win32 --arch=ia32 --app-version=0.0.1 --out=dist
+
+  //ia32
+  let current_page = 1;
+  let records_per_page = 8;
+  let ukupno = 0;
+  let isupdat = false;
+  let nov = false;
+
+  $(document).ready(function() {
+   $(document.querySelector('#odaberi')).Selects({
+     issearch: true,
+     ajaxUrl: "",
+     option: 'option',
+     placeholder: 'Traži po nazivu',
+     find: SelectprikaziPretragu,
+     onSelect: SelectonSelect
+   });
+   if (DB) {
+     pocni();
+   }
+   $(".vidisve").on('click', (function(e) {
+     e.preventDefault();
+     $(".vidisve").addClass('btnacrive');
+     $(".vididodaj").removeClass('btnacrive');
+     $(".dodaj").hide();
+     $(".prikaz").fadeIn();
+     if (isupdat) {
+       $(".updated").hide();
+     }
+     osvezi();
+
+   }));
+   $(".osvezisve").on('click', (function(e) {
+     e.preventDefault();
+     $('#tbody').html('');
+     osvezi();
+     Swal.fire({
+       title: "Osveženo ",
+       text: "Strana je osvežena",
+       icon: "success"
+     });
+   }));
+
+   $(".vididodaj").on('click', (function(e) {
+     e.preventDefault();
+     if (isupdat) {
+       $(".updated").hide();
+     }
+     nov = false;
+     $(".vididodaj").addClass('btnacrive');
+     $(".vidisve").removeClass('btnacrive');
+     $(".prikaz").hide();
+     $(".dodaj").fadeIn();
+   }));
+   $(".promenibazu").on('click', (function(e) {
+     e.preventDefault();
+     uBazu();
+   }));
+   $(".dodalubazu").on('click', (function(e) {
+     e.preventDefault();
+     console.log("sdasdsa");
+     dodajUbazu();
+
+   }));
+  });
+
+  function edit(id) {
+    let data= DB.Select().Where('id',parseInt(id)).data;
+    let   row=data[0];
+     isupdat = true;
+     $(".vidisve").removeClass('btnacrive');
+     $(".prikaz").hide();
+     $("#cid").val(id);
+     $(".updated").fadeIn();
+     $('#cnaziv').val(row.naziv);
+     $('#ccena').val(row.cena);
+     $('#ckolicina').val(row.kolicina);
+     $('#cmarka').val(row.marka);
+
+  }
+
+  function brisi(id) {
+   Swal.fire({
+     title: "Da li želite brisati poroizvod",
+     icon: "question",
+     confirmButtonText: "Da ",
+     cancelButtonText: "Ne",
+     showCancelButton: true,
+     showCloseButton: true
+   }).then((result) => {
+     if (result.isConfirmed) {
+         runDeleted(id);
+     }
+   });
+  }
+  const pocni = function() {
+    let dbdata=DB.Select().data;
+   ukupno=dbdata.length;
+
+     $("#sad").Pagination({
+       $page: current_page,
+       $totalitems: ukupno,
+       $limit: records_per_page,
+       onClick: idinastrany
+     });
+    dbdata=DB.Select().Limit(0,records_per_page).ByIdDesc('id').data;
+      let tr ='';
+      for (var i = 0, l = dbdata.length; i < l; i++) {
+        let row=dbdata[i];
+         tr = "<tr><th scope='row'>" + row.id + "</th>" +
+          "<td >" + row.naziv + "</td>" +
+          "<td >" + row.cena + "</td>" +
+          "<td >" + row.marka + "</td>" +
+          "<td >" + row.kolicina + "</td>" +
+          "<td><a href='#' data-id='" + row.id + "' class='icon edit' onclick='edit(" + row.id + ")'><img id='edit-pid_" + row.id + "' src='assets/img/edit-icon.png' width='20'></a> " +
+          "<a href='#' data-id='" + row.id + "' class='icon delete'  onclick='brisi(" + row.id + ")'><img id='delete-pid_" + row.id + "' src='assets/img/x-icon.png' width='20'></a></td>" +
+          "</tr>";
+        $('#tbody').append(tr);
+
+      }
+
+  }
+  const uBazu = function() {
+   let err = [];
+   let naziv = $('#cnaziv').val();
+   let cena = $('#ccena').val();
+   let kolicina = $('#ckolicina').val();
+   let marka = $('#cmarka').val();
+   let id = $('#cid').val();
+   if ($('#cnaziv').val() == '') {
+     err.push("naziv");
+   }
+   if ($('#ccena').val() == '') {
+     err.push("cenu");
+   }
+   if ($('#ckolicina').val() == '') {
+     err.push("količinu");
+   }
+   if ($('#cmarka').val() == '') {
+     err.push("dimenziju");
+   }
+   if (err.length > 0) {
+     let str = err.join(' ,');
+     Swal.fire('', "Unesite " + str, "info");
+     return;
+   }
+     DB.Update([{'naziv':naziv,"cena":cena,"kolicina":kolicina,"marka":marka}], 'id',id);
+
+     $(".vidisve").addClass('btnacrive');
+     $(".vididodaj").removeClass('btnacrive');
+     $(".dodaj").hide();
+     $(".prikaz").fadeIn();
+     $(".updated").hide();
+     Swal.fire({
+       title: "Promenjeno",
+       text: "Proizvod je menjan",
+       icon: "success"
+     });
+     isupdat = false;
+     osvezi();
+
+  }
+  const SelectonSelect = function(option, options) {
+   $("#sad").html('');
+   $('#tbody').html("");
+    let dbdata=DB.Select().Where('id',option.getAttribute('data-value')).data;
+    let tr ='';
+    let row={};
+    for (var i = 0, l = dbdata.length; i < l; i++) {
+     row=dbdata[i];
+       tr = "<tr><th scope='row'>" + row.id + "</th>" +
+        "<td >" + row.naziv + "</td>" +
+        "<td >" + row.cena + "</td>" +
+        "<td >" + row.marka + "</td>" +
+        "<td >" + row.kolicina + "</td>" +
+        "<td><a href='#' data-id='" + row.id + "' class='icon edit' onclick='edit(" + row.id + ")'><img id='edit-pid_" + row.id + "' src='assets/img/edit-icon.png' width='20'></a> " +
+        "<a href='#' data-id='" + row.id + "' class='icon delete'  onclick='brisi(" + row.id + ")'><img id='delete-pid_" + row.id + "' src='assets/img/x-icon.png' width='20'></a></td>" +
+        "</tr>";
+      $('#tbody').append(tr);
+
+    }
+
+  }
+  const SelectprikaziPretragu = function(text, option, $this) {
+   $this.clear();
+     let dbdata=DB.Select().Like('naziv',text).data;
+     let row={};
+     for (var i = 0, l = dbdata.length; i < l; i++) {
+        row=dbdata[i];
+        $this.addelement(row.naziv, row.id);
+
+     }
+
+  }
+  const dodajUbazu = function() {
+   let err = [];
+   let naziv = $('#naziv').val();
+   let cena = $('#cena').val();
+   let kolicina = $('#kolicina').val();
+   let marka = $('#marka').val();
+   if ($('#naziv').val() == '') {
+     err.push("naziv");
+   }
+   if ($('#cena').val() == '') {
+     err.push("cenu");
+   }
+   if ($('#kolicina').val() == '') {
+     err.push("količinu");
+   }
+   if ($('#marka').val() == '') {
+     err.push("dimenziju");
+   }
+   if (err.length > 0) {
+     let str = err.join(' ,');
+     Swal.fire('', "Unesite " + str, "info");
+     return;
+   }
+   nov = true;
+   $('#naziv').val('');
+   $('#cena').val('');
+   $('#kolicina').val('');
+   $('#marka').val('');
+    DB.Insert({'naziv':naziv,"cena":cena,"kolicina":kolicina,"marka":marka},'id');
+     Swal.fire({
+       title: "Upisano",
+       text: "Proizvod je upisan",
+       icon: "success"
+     });
+
+  }
+  const osvezi = function() {
+   let from = (current_page - 1) * records_per_page;
+   $('#tbody').html('');
+   let dbdata=DB.Select().Limit(from,records_per_page).ByIdDesc('id').data;
+     let tr ='';
+      let row={};
+     for (var i = 0, l = dbdata.length; i < l; i++) {
+       row=dbdata[i];
+        tr = "<tr><th scope='row'>" + row.id + "</th>" +
+         "<td >" + row.naziv + "</td>" +
+         "<td >" + row.cena + "</td>" +
+         "<td >" + row.marka + "</td>" +
+         "<td >" + row.kolicina + "</td>" +
+         "<td><a href='#' data-id='" + row.id + "' class='icon edit' onclick='edit(" + row.id + ")'><img id='edit-pid_" + row.id + "' src='assets/img/edit-icon.png' width='20'></a> " +
+         "<a href='#' data-id='" + row.id + "' class='icon delete'  onclick='brisi(" + row.id + ")'><img id='delete-pid_" + row.id + "' src='assets/img/x-icon.png' width='20'></a></td>" +
+         "</tr>";
+       $('#tbody').append(tr);
+
+     }
+   dbdata=DB.Select().data;
+    ukupno=dbdata.length;
+     $("#sad").Pagination({
+       $page: current_page,
+       $totalitems: ukupno,
+       $limit: records_per_page,
+       onClick: idinastrany
+     });
+  }
+  const runDeleted = function(id) {
+   $('#tbody').html('');
+    DB.Delete('id',id);
+   let dbdata=DB.Select().Limit(0,records_per_page).ByIdDesc('id').data;
+     let tr ='';
+       let row={};
+     for (var i = 0, l = dbdata.length; i < l; i++) {
+        row=dbdata[i];
+        tr = "<tr><th scope='row'>" + row.id + "</th>" +
+         "<td >" + row.naziv + "</td>" +
+         "<td >" + row.cena + "</td>" +
+         "<td >" + row.marka + "</td>" +
+         "<td >" + row.kolicina + "</td>" +
+         "<td><a href='#' data-id='" + row.id + "' class='icon edit' onclick='edit(" + row.id + ")'><img id='edit-pid_" + row.id + "' src='assets/img/edit-icon.png' width='20'></a> " +
+         "<a href='#' data-id='" + row.id + "' class='icon delete'  onclick='brisi(" + row.id + ")'><img id='delete-pid_" + row.id + "' src='assets/img/x-icon.png' width='20'></a></td>" +
+         "</tr>";
+       $('#tbody').append(tr);
+
+     }
+   dbdata=DB.Select().data;
+    ukupno=dbdata.length;
+     $("#sad").Pagination({
+       $page: current_page,
+       $totalitems: ukupno,
+       $limit: records_per_page,
+       onClick: idinastrany
+     });
+
+
+   Swal.fire({
+     title: "Brisan ",
+     text: "Proizvod je brisan.",
+     icon: "success"
+   });
+  }
+
+  const idinastrany = function(e, page) {
+   e.preventDefault();
+   current_page = page;
+   let from = (current_page - 1) * records_per_page;
+   $('#tbody').html('');
+
+   let dbdata=DB.Select().Limit(from,records_per_page).ByIdDesc('id').data;
+     let tr ='';
+      let row={};
+     for (var i = 0, l = dbdata.length; i < l; i++) {
+       row=dbdata[i];
+        tr = "<tr><th scope='row'>" + row.id + "</th>" +
+         "<td >" + row.naziv + "</td>" +
+         "<td >" + row.cena + "</td>" +
+         "<td >" + row.marka + "</td>" +
+         "<td >" + row.kolicina + "</td>" +
+         "<td><a href='#' data-id='" + row.id + "' class='icon edit' onclick='edit(" + row.id + ")'><img id='edit-pid_" + row.id + "' src='assets/img/edit-icon.png' width='20'></a> " +
+         "<a href='#' data-id='" + row.id + "' class='icon delete'  onclick='brisi(" + row.id + ")'><img id='delete-pid_" + row.id + "' src='assets/img/x-icon.png' width='20'></a></td>" +
+         "</tr>";
+       $('#tbody').append(tr);
+
+     }
+   $("#sad").Pagination({
+     $page: current_page,
+     $totalitems: ukupno,
+     $limit: records_per_page,
+     onClick: idinastrany,
+     onClick: idinastrany
+   });
+
+  }
+
+  </script>
+</body>
+
+</html>
